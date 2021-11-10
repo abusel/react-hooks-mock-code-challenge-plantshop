@@ -20,10 +20,8 @@ function NewPlantForm({plants, setPlants}) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(newPlant)
+          body: JSON.stringify(parseInt(newPlant))
         })
-        .then(res=>res.json())
-        .then(data => setPlants((plants)=> [...plants, data]))
       }
       }>
         <input type="text" name="name" placeholder="Plant name" value={name} onChange={(e)=>{
