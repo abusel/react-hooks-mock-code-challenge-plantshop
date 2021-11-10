@@ -1,16 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 
-function PlantCard() {
+function PlantCard({plant, setPlants, plants}) {
+  const [clicked, setClicked] = useState(true)
   return (
     <li className="card">
-      <img src={"https://via.placeholder.com/400"} alt={"plant name"} />
-      <h4>{"plant name"}</h4>
-      <p>Price: {"plant price"}</p>
-      {true ? (
-        <button className="primary">In Stock</button>
+      <img src={plant.image} alt={"plant name"} />
+      <h4>{plant.name}</h4>
+      <p>Price: ${plant.price}</p>
+      {clicked ? (
+        <button className="primary" onClick={()=>{
+          setClicked(false)
+        }
+        }>In Stock</button>
       ) : (
         <button>Out of Stock</button>
       )}
+      <button onClick={()=>{
+        fetch(`http://localhost:6001/plants/${plant.id}`,{
+          method: 'Delete'
+        }).then(res=> {
+          setPlants(plants => plants.filter(selected => {
+            return selected.id !== plant.id
+          }))
+        })
+      }}>Delete</button>
     </li>
   );
 }
